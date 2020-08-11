@@ -132,21 +132,25 @@ class MainActivity : AppCompatActivity() {
                     val pointSeries = LineGraphSeries(pointsArrayList.toTypedArray())
                     resultGv.addSeries(pointSeries)
 
-                    // Formatando Gráfico
-                    resultGv.gridLabelRenderer.setHumanRounding(false)
-                    resultGv.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(this)
+                    if (pointsArrayList.isNotEmpty()) {
+                        // Formatando Gráfico
+                        resultGv.gridLabelRenderer.setHumanRounding(false)
+                        resultGv.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(this)
 
-                    resultGv.gridLabelRenderer.numHorizontalLabels = 4
-                    val primeiraData = Date(pointsArrayList.first().x.toLong())
-                    val ultimaData = Date(pointsArrayList.last().x.toLong())
-                    resultGv.viewport.setMinX(primeiraData.time.toDouble())
-                    resultGv.viewport.setMaxX(ultimaData.time.toDouble())
-                    resultGv.viewport.isXAxisBoundsManual = true
+                        resultGv.gridLabelRenderer.numHorizontalLabels = 4
+                        val primeiraDataX = Date(pointsArrayList.first().x.toLong())
+                        val ultimaDataX = Date(pointsArrayList.last().x.toLong())
+                        resultGv.viewport.setMinX(primeiraDataX.time.toDouble())
+                        resultGv.viewport.setMaxX(ultimaDataX.time.toDouble())
+                        resultGv.viewport.isXAxisBoundsManual = true
 
-                    resultGv.gridLabelRenderer.numVerticalLabels = 4
-                    resultGv.viewport.setMinY(pointsArrayList.first().y)
-                    resultGv.viewport.setMaxY(pointsArrayList.last().y)
-                    resultGv.viewport.isYAxisBoundsManual = true
+                        resultGv.gridLabelRenderer.numVerticalLabels = 4
+                        val primeiraDataY = Date(pointsArrayList.first().y.toLong())
+                        val ultimaDataY = Date(pointsArrayList.last().y.toLong())
+                        resultGv.viewport.setMinY(primeiraDataY.time.toDouble())
+                        resultGv.viewport.setMaxY(ultimaDataY.time.toDouble())
+                        resultGv.viewport.isYAxisBoundsManual = true
+                    }
                 }
             }
         )
@@ -200,6 +204,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+        if (resultSb.isEmpty()) {
+            resultSb.append("Sem casos registrados");
         }
         return resultSb.toString()
     }
